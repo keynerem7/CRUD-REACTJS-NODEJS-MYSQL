@@ -134,83 +134,99 @@ function App() {
   };
 
   return (
-    <div className="App">{/* Contenedor principal de la aplicación */}
-      {/* Formulario para ingresar los datos */}
-      <div className="datos">{/* Contenedor del formulario */}
-        <label> Nombre:{/* Etiqueta del input de nombre */}
+    <div className="App">
+
+    {/* Card formulario */}
+    <div className="card">
+      <h2>{editIndex !== null ? 'Editar empleado' : 'Registrar empleado'}</h2>
+
+      <form className="datos" onSubmit={registrarDatos}>
+        <label>
+          Nombre:
           <input
-            type="text" /* Campo de texto */
-            value={nombre} /* Valor controlado por el estado 'nombre' */
-            onChange={(e) => setNombre(e.target.value)} /* Actualiza 'nombre' al escribir */
-          />
-        </label>
-        <label> Edad:{/* Etiqueta del input de edad */}
-          <input
-            type="number" /* Campo numérico */
-            value={edad} /* Valor controlado por 'edad' */
-            onChange={(e) => setEdad(Number(e.target.value))} /* Convierte a número y guarda */
-          />
-        </label>
-        <label> País:{/* Etiqueta del input de país */}
-          <input
-            type="text" /* Campo de texto */
-            value={pais} /* Valor controlado por 'pais' */
-            onChange={(e) => setPais(e.target.value)} /* Actualiza 'pais' */
-          />
-        </label>
-        <label> Cargo:{/* Etiqueta del input de cargo */}
-          <input
-            type="text" /* Campo de texto */
-            value={cargo} /* Valor controlado por 'cargo' */
-            onChange={(e) => setCargo(e.target.value)} /* Actualiza 'cargo' */
-          />
-        </label>
-        <label> Años:{/* Etiqueta del input de años de experiencia */}
-          <input
-            type="number" /* Campo numérico */
-            value={anios} /* Valor controlado por 'anios' */
-            onChange={(e) => setAnios(Number(e.target.value))} /* Convierte a número y guarda */
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
           />
         </label>
 
-        {/* Botón que cambia de texto dependiendo si es nuevo o edición */}
-        <button onClick={registrarDatos}>
-          {editIndex !== null ? 'Actualizar' : 'Registrar'}{/* Texto dinámico del botón */}
+        <label>
+          Edad:
+          <input
+            type="number"
+            value={edad}
+            onChange={(e) => setEdad(Number(e.target.value))}
+          />
+        </label>
+
+        <label>
+          País:
+          <input
+            type="text"
+            value={pais}
+            onChange={(e) => setPais(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Cargo:
+          <input
+            type="text"
+            value={cargo}
+            onChange={(e) => setCargo(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Años:
+          <input
+            type="number"
+            value={anios}
+            onChange={(e) => setAnios(Number(e.target.value))}
+          />
+        </label>
+
+        <button type="submit">
+          {editIndex !== null ? 'Actualizar' : 'Registrar'}
         </button>
-      </div>
+      </form>
+    </div>
 
-      {/* Tabla con los empleados registrados */}
-      {registros.length > 0 && ( /* Solo mostramos la tabla si hay registros */
-        <div className="tabla-container">{/* Contenedor para estilos de la tabla */}
-          <table className="tabla-registros">{/* Tabla de empleados */}
-            <thead>{/* Cabecera de la tabla */}
-              <tr>{/* Fila de encabezados */}
-                <th>Nombre</th>{/* Columna: Nombre */}
-                <th>Edad</th>{/* Columna: Edad */}
-                <th>País</th>{/* Columna: País */}
-                <th>Cargo</th>{/* Columna: Cargo */}
-                <th>Años</th>{/* Columna: Años de experiencia */}
-                <th>Acciones</th>{/* Columna: Botones de acción */}
+    {/* Card tabla */}
+    <div className="card">
+      <h2>Lista de empleados</h2>
+
+      {registros.length > 0 ? (
+        <div className="tabla-container">
+          <table className="tabla-registros">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>País</th>
+                <th>Cargo</th>
+                <th>Años</th>
+                <th>Acciones</th>
               </tr>
             </thead>
-            <tbody>{/* Cuerpo de la tabla */}
-              {registros.map((reg, idx) => ( /* Recorremos cada registro con su índice */
-                <tr key={idx}>{/* Fila por empleado (key = índice) */}
-                  <td>{reg.nombre}</td>{/* Celda: nombre del empleado */}
-                  <td>{reg.edad}</td>{/* Celda: edad del empleado */}
-                  <td>{reg.pais}</td>{/* Celda: país del empleado */}
-                  <td>{reg.cargo}</td>{/* Celda: cargo del empleado */}
-                  <td>{reg.anios}</td>{/* Celda: años de experiencia */}
-                  <td>{/* Celda: acciones */}
+            <tbody>
+              {registros.map((reg, idx) => (
+                <tr key={idx}>
+                  <td>{reg.nombre}</td>
+                  <td>{reg.edad}</td>
+                  <td>{reg.pais}</td>
+                  <td>{reg.cargo}</td>
+                  <td>{reg.anios}</td>
+                  <td>
                     <button
-                      className="btn-editar" /* Clase CSS para estilos */
-                      onClick={() => editarRegistro(idx)} /* Al hacer clic, cargamos los datos en el formulario */
+                      className="btn-editar"
+                      onClick={() => editarRegistro(idx)}
                     >
                       Editar
                     </button>
                     <button
-                      className="btn-eliminar" /* Clase CSS para estilos */
-                      onClick={() => eliminarRegistro(idx)} /* Al hacer clic, eliminamos el registro */
+                      className="btn-eliminar"
+                      onClick={() => eliminarRegistro(idx)}
                     >
                       Eliminar
                     </button>
@@ -220,8 +236,14 @@ function App() {
             </tbody>
           </table>
         </div>
+      ) : (
+        <p style={{ color: '#9ca3af' }}>
+          No hay empleados registrados.
+        </p>
       )}
     </div>
+
+  </div>
   );
 }
 
